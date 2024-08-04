@@ -41,12 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_all'])) {
         }
 
         if (mysqli_query($objCon, $sqlUpdate)) {
-            
+            // Update successful
         } else {
             mysqli_error($objCon);
         }
     } else {
-         mysqli_error($objCon);
+        mysqli_error($objCon);
     }
 }
 
@@ -120,7 +120,7 @@ if (!$result) {
     .form-group {
         margin-bottom: 15px;
     }
-</style>
+    </style>
 
 </head>
 <body>
@@ -138,31 +138,31 @@ if (!$result) {
                     <div>แสดงข้อมูลอสังหาริมทรัพย์</div>
                 </div>
                 <!-- Cards to display estate data -->
-                <form method='POST'>
-                    <div class="row">
-                        <?php
-                        if ($result) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $imagePaths = explode(',', $row['image_paths']);
-                                $imageHtml = $imagePaths[0] ? "<img src='uploads/{$imagePaths[0]}' class='img-fluid' alt='Property Image'>" : "";
-                                $a_day = $row['a_day'] ? date('Y-m-d', strtotime($row['a_day'])) : '';
-                                $a_status = $row['a_status'] ?? 0; // Default to 0 if not found
-                                $statusOptions = [
-                                    0 => 'ว่าง',
-                                    1 => 'ติดจอง',
-                                    2 => 'ปิดการขาย'
-                                ];
-                                $statusHtml = '';
-                                foreach ($statusOptions as $value => $label) {
-                                    $selected = ($a_status == $value) ? 'selected' : '';
-                                    $statusHtml .= "<option value='{$value}' {$selected}>{$label}</option>";
-                                }
+                <div class="row">
+                    <?php
+                    if ($result) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $imagePaths = explode(',', $row['image_paths']);
+                            $imageHtml = $imagePaths[0] ? "<img src='uploads/{$imagePaths[0]}' class='img-fluid' alt='Property Image'>" : "";
+                            $a_day = $row['a_day'] ? date('Y-m-d', strtotime($row['a_day'])) : '';
+                            $a_status = $row['a_status'] ?? 0; // Default to 0 if not found
+                            $statusOptions = [
+                                0 => 'ว่าง',
+                                1 => 'ติดจอง',
+                                2 => 'ปิดการขาย'
+                            ];
+                            $statusHtml = '';
+                            foreach ($statusOptions as $value => $label) {
+                                $selected = ($a_status == $value) ? 'selected' : '';
+                                $statusHtml .= "<option value='{$value}' {$selected}>{$label}</option>";
+                            }
 
-                                // Format price with currency and discount
-                                $formattedPrice = number_format($row['a_price'], 2) . " บาท";
-                                $discountHtml = $row['a_discount'] ? "{$row['a_discount']}%" : '';
+                            // Format price with currency and discount
+                            $formattedPrice = number_format($row['a_price'], 2) . " บาท";
+                            $discountHtml = $row['a_discount'] ? "{$row['a_discount']}%" : '';
 
-                                echo "<div class='col-md-12'>
+                            echo "<div class='col-md-12'>
+                                    <form method='POST'>
                                         <div class='property-card'>
                                             <div class='property-card-image'>
                                                 {$imageHtml}
@@ -200,24 +200,23 @@ if (!$result) {
                                                 <div class='form-group'>
                                                     <label for='e_values'>สถานะ:</label>
                                                     <div class='custom-control custom-switch'>
-                                                        <input type='checkbox' class='custom-control-input' id='e_values' name='e_values' " . ($row['e_values'] == 1 ? 'checked' : '') . ">
-                                                        <label class='custom-control-label' for='e_values'>เปิด/ปิด</label>
+                                                        <input type='checkbox' class='custom-control-input' id='e_values_{$row['e_id']}' name='e_values' " . ($row['e_values'] == 1 ? 'checked' : '') . ">
+                                                        <label class='custom-control-label' for='e_values_{$row['e_id']}'>เปิด/ปิด</label>
                                                     </div>
                                                 </div>
                                                 <button type='submit' name='submit_all' class='btn btn-primary mt-2'>บันทึกข้อมูล</button>
                                             </div>
                                         </div>
-                                    </div>";
-                            }
-                        } else {
-                            echo "<div class='col-12'><p>ไม่พบข้อมูล</p></div>";
+                                    </form>
+                                </div>";
                         }
-                        ?>
-                    </div>
-                </form>
+                    } else {
+                        echo "<div class='col-12'><p>ไม่พบข้อมูล</p></div>";
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
 </body>
 </html>
-
