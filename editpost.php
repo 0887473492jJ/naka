@@ -120,7 +120,8 @@ if (!$result) {
     .form-group {
         margin-bottom: 15px;
     }
-    </style>
+</style>
+
 </head>
 <body>
     <div class="container">
@@ -137,31 +138,31 @@ if (!$result) {
                     <div>แสดงข้อมูลอสังหาริมทรัพย์</div>
                 </div>
                 <!-- Cards to display estate data -->
-                <div class="row">
-                    <?php
-                    if ($result) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $imagePaths = explode(',', $row['image_paths']);
-                            $imageHtml = $imagePaths[0] ? "<img src='uploads/{$imagePaths[0]}' class='img-fluid' alt='Property Image'>" : "";
-                            $a_day = $row['a_day'] ? date('Y-m-d', strtotime($row['a_day'])) : '';
-                            $a_status = $row['a_status'] ?? 0; // Default to 0 if not found
-                            $statusOptions = [
-                                0 => 'ว่าง',
-                                1 => 'ติดจอง',
-                                2 => 'ปิดการขาย'
-                            ];
-                            $statusHtml = '';
-                            foreach ($statusOptions as $value => $label) {
-                                $selected = ($a_status == $value) ? 'selected' : '';
-                                $statusHtml .= "<option value='{$value}' {$selected}>{$label}</option>";
-                            }
+                <form method='POST'>
+                    <div class="row">
+                        <?php
+                        if ($result) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $imagePaths = explode(',', $row['image_paths']);
+                                $imageHtml = $imagePaths[0] ? "<img src='uploads/{$imagePaths[0]}' class='img-fluid' alt='Property Image'>" : "";
+                                $a_day = $row['a_day'] ? date('Y-m-d', strtotime($row['a_day'])) : '';
+                                $a_status = $row['a_status'] ?? 0; // Default to 0 if not found
+                                $statusOptions = [
+                                    0 => 'ว่าง',
+                                    1 => 'ติดจอง',
+                                    2 => 'ปิดการขาย'
+                                ];
+                                $statusHtml = '';
+                                foreach ($statusOptions as $value => $label) {
+                                    $selected = ($a_status == $value) ? 'selected' : '';
+                                    $statusHtml .= "<option value='{$value}' {$selected}>{$label}</option>";
+                                }
 
-                            // Format price with currency and discount
-                            $formattedPrice = number_format($row['a_price'], 2) . " บาท";
-                            $discountHtml = $row['a_discount'] ? "{$row['a_discount']}%" : '';
+                                // Format price with currency and discount
+                                $formattedPrice = number_format($row['a_price'], 2) . " บาท";
+                                $discountHtml = $row['a_discount'] ? "{$row['a_discount']}%" : '';
 
-                            echo "<div class='col-md-12'>
-                                    <form method='POST'>
+                                echo "<div class='col-md-12'>
                                         <div class='property-card'>
                                             <div class='property-card-image'>
                                                 {$imageHtml}
@@ -170,11 +171,12 @@ if (!$result) {
                                                 <h5 class='property-card-title'>{$row['e_name']}</h5>
                                                 <p class='property-card-text'>ประเภท: {$row['t_name']}</p>
                                                 <p class='property-card-text'>ประเภทการขาย: {$row['e_sales_type']}</p>
+                                                <p class='property-card-text'>พื้นที่: {$row['e_area']} ตร.ม.</p>
+                                                <p class='property-card-price'>ราคา: ฿{$row['e_price']}</p>
+                                                <p class='property-card-price'>ราคาส่วนลด: {$formattedPrice}</p>
                                                 <p class='property-card-text'>วันที่: {$a_day}</p>
                                                 <p class='property-card-text'>สถานะ: " . $statusOptions[$a_status] . "</p>
                                                 <p class='property-card-text'>ส่วนลด: {$discountHtml}</p>
-                                                 <p class='property-card-price'>ราคา: ฿{$row['e_price']}</p>
-                                                <p class='property-card-price'>ราคาส่วนลด: {$formattedPrice}</p>
                                                 <input type='hidden' name='e_id' value='{$row['e_id']}'>
                                                 <input type='hidden' name='a_id' value='{$row['a_id']}'>
                                                 <div class='form-group'>
@@ -198,21 +200,21 @@ if (!$result) {
                                                 <div class='form-group'>
                                                     <label for='e_values'>สถานะ:</label>
                                                     <div class='custom-control custom-switch'>
-                                                        <input type='checkbox' class='custom-control-input' id='e_values_{$row['e_id']}' name='e_values' " . ($row['e_values'] == 1 ? 'checked' : '') . ">
-                                                        <label class='custom-control-label' for='e_values_{$row['e_id']}'>เปิด/ปิด</label>
+                                                        <input type='checkbox' class='custom-control-input' id='e_values' name='e_values' " . ($row['e_values'] == 1 ? 'checked' : '') . ">
+                                                        <label class='custom-control-label' for='e_values'>เปิด/ปิด</label>
                                                     </div>
                                                 </div>
                                                 <button type='submit' name='submit_all' class='btn btn-primary mt-2'>บันทึกข้อมูล</button>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>";
+                                    </div>";
+                            }
+                        } else {
+                            echo "<div class='col-12'><p>ไม่พบข้อมูล</p></div>";
                         }
-                    } else {
-                        echo "<div class='col-12'><p>ไม่พบข้อมูล</p></div>";
-                    }
-                    ?>
-                </div>
+                        ?>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
