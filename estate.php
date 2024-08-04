@@ -121,7 +121,6 @@ if (!$result) {
                     <?php
                     if ($result) {
                         while ($row = mysqli_fetch_assoc($result)) {
-<<<<<<< HEAD
                             // ตรวจสอบค่า e_values
                             if ($row['e_values'] == 1) {
                                 $imagePaths = explode(',', $row['image_paths']);
@@ -164,47 +163,6 @@ if (!$result) {
                                         </div>
                                     </div>";
                             }
-=======
-                            $imagePaths = explode(',', $row['image_paths']);
-                            $imageHtml = $imagePaths[0] ? "<img src='uploads/{$imagePaths[0]}' class='img-fluid' alt='Property Image'>" : "";
-                            $a_day = $row['a_day'] ? date('Y-m-d', strtotime($row['a_day'])) : '';
-                            $a_status = $row['a_status'] ?? 0; // Default to 0 if not found
-                            $statusOptions = [
-                                0 => 'ว่าง',
-                                1 => 'ติดจอง',
-                                2 => 'ปิดการขาย'
-                            ];
-                            $statusHtml = '';
-                            foreach ($statusOptions as $value => $label) {
-                                $selected = ($a_status == $value) ? 'selected' : '';
-                                $statusHtml .= "<option value='{$value}' {$selected}>{$label}</option>";
-                            }
-
-                            // Format price with currency and discount
-                            $formattedPrice = number_format($row['a_price'], 2) . " บาท";
-                            $discountHtml = $row['a_discount'] ? "{$row['a_discount']}%" : '';
-
-                            echo "<div class='col-md-4'>
-                                    <div class='property-card'>
-                                        <form method='POST'>
-                                            <div class='property-card-image'>
-                                                {$imageHtml}
-                                            </div>
-                                            <div class='property-card-body'>
-                                                <h5 class='property-card-title'>{$row['e_name']}</h5>
-                                                <p class='property-card-text'>ประเภท: {$row['t_name']}</p>
-                                                <p class='property-card-text'>พื้นที่: {$row['e_area']} ตร.ม.</p>
-                                                <p class='property-card-text'>สถานะ: " . $statusOptions[$a_status] . "</p>
-                                                <p class='property-card-text'>ส่วนลด: {$discountHtml}</p>
-                                                <p class='property-card-price'>ราคา: ฿{$row['e_price']}</p>
-                                                <p class='property-card-price'>ราคาส่วนลด: {$formattedPrice}</p>
-                                                <input type='hidden' name='e_id' value='{$row['e_id']}'>
-                                                <input type='hidden' name='a_id' value='{$row['a_id']}'>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>";
->>>>>>> e6660e165532a3d1c7f7ce7b3692b0085f0eb4c6
                         }
                     } else {
                         echo "<div class='col-12'><p>ไม่พบข้อมูล</p></div>";
@@ -215,9 +173,5 @@ if (!$result) {
         </div>
     </div>
 </body>
-<<<<<<< HEAD
 
 </html>
-=======
-</html>
->>>>>>> e6660e165532a3d1c7f7ce7b3692b0085f0eb4c6

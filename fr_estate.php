@@ -11,6 +11,16 @@
     <link href="./css/style.css" rel="stylesheet">
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+      <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ข้อมูลอสังหาริมทรัพย์</title>
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="./css/style.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             display: flex;
@@ -25,7 +35,62 @@
             max-width: 1360px;
             padding: 20px;
             background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-control {
+            font-size: 0.9em;
+            padding: 5px 10px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        .form-row {
+            margin-bottom: 15px;
+        }
+        .form-col {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .form-col:last-child {
+            margin-right: 0;
+        }
+        .form-inline-group {
+            display: flex;
+            gap: 10px;
+        }
+        .form-inline-group .form-control {
+            flex: 1;
+        }
+    </style>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+        .register-container {
+            width: 90%;
+            max-width: 1360px;
+            padding: 20px;
+            background-color: white;
+            
             margin: auto;
         }
         .form-group {
@@ -140,6 +205,11 @@
                 <label for="ei_paths[]" class="form-label">รูปภาพ</label>
                 <input type="file" class="form-control" id="ei_paths" name="ei_paths[]" multiple required>
             </div>
+             
+        
+        <form class="form-register" method="post" action="insert_estate.php" enctype="multipart/form-data">
+            <!-- Form fields -->
+            <!-- Your form fields here -->
             <div class="form-group">
                 <label for="e_latitude" class="form-label">ละติจูด</label>
                 <input type="text" class="form-control" id="e_latitude" name="e_latitude" placeholder="ละติจูด" required>
@@ -151,6 +221,9 @@
             <div id="map" class="form-group">
                 <!-- Google Maps Integration Here -->
             </div>
+            
+        
+    
             <div class="button-group">
                 <button class="btn btn-success" type="submit">เพิ่มข้อมูล</button>
                 <a href="editestate.php" class="btn btn-danger">ยกเลิก</a>
@@ -161,17 +234,28 @@
     <!-- Load the Google Maps API (Replace YOUR_API_KEY with your actual API key) -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&language=th" async defer></script>
     <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: 13.7563, lng: 100.5018 }, // Center the map to Bangkok
-                zoom: 12
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
+            var initialLatLng = { lat: 16.439755821668168, lng: 102.82750683593747 }; // Example initial position, replace with actual coordinates
+            
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: initialLatLng,
+                zoom: 12 // Adjust as appropriate
+            });
+
+            var marker = new google.maps.Marker({
+                position: initialLatLng,
+                map: map,
+                draggable: true // Allow marker to be draggable
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function(event) {
+                document.getElementById('e_latitude').value = event.latLng.lat();
+                document.getElementById('e_longitude').value = event.latLng.lng();
+            });
+
             var salesTypeSelect = document.getElementById('e_sales_type');
             var insuranceInput = document.getElementById('e_insurance');
-
+    
             salesTypeSelect.addEventListener('change', function() {
                 if (this.value === 'ขาย') {
                     insuranceInput.value = '-';

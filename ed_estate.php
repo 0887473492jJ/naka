@@ -183,8 +183,8 @@ $stmt->close();
             <input type="text" class="form-control" id="e_longitude" name="e_longitude" placeholder="ลองจิจูด" value="<?php echo htmlspecialchars($row['e_longitude']); ?>" required>
         </div>
         
-        <div id="map" class="form-group">
-            <!-- Google Maps Integration Here -->
+    <div id="map" class="form-group">
+    <!-- Google Maps Integration Here -->
         </div>
         
         <div class="button-group">
@@ -193,9 +193,36 @@ $stmt->close();
         </div>
     </form>
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&language=th" ></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        var e_latitude = parseFloat(document.getElementById('e_latitude').value);
+        var e_longitude = parseFloat(document.getElementById('e_longitude').value);
+
+        // ตรวจสอบว่าค่าของ e_latitude และ e_longitude ถูกต้องหรือไม่
+        if (!isNaN(e_latitude) && !isNaN(e_longitude)) {
+            var initialLatLng = new google.maps.LatLng(e_latitude, e_longitude);
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: initialLatLng,
+                zoom: 12 // Adjust as appropriate
+            });
+
+            var marker = new google.maps.Marker({
+                position: initialLatLng,
+                map: map,
+                draggable: true // Allow marker to be draggable
+            });
+
+            google.maps.event.addListener(marker, 'dragend', function(event) {
+                document.getElementById('e_latitude').value = event.latLng.lat();
+                document.getElementById('e_longitude').value = event.latLng.lng();
+            });
+        } else {
+            console.error('Latitude or Longitude is invalid');
+        }
+
         const salesTypeSelect = document.getElementById('e_sales_type');
         const insuranceInput = document.getElementById('e_insurance');
 
