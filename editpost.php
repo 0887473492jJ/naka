@@ -121,7 +121,6 @@ if (!$result) {
         margin-bottom: 15px;
     }
     </style>
-
 </head>
 <body>
     <div class="container">
@@ -171,12 +170,11 @@ if (!$result) {
                                                 <h5 class='property-card-title'>{$row['e_name']}</h5>
                                                 <p class='property-card-text'>ประเภท: {$row['t_name']}</p>
                                                 <p class='property-card-text'>ประเภทการขาย: {$row['e_sales_type']}</p>
-                                                <p class='property-card-text'>พื้นที่: {$row['e_area']} ตร.ม.</p>
-                                                <p class='property-card-price'>ราคา: ฿{$row['e_price']}</p>
-                                                <p class='property-card-price'>ราคาส่วนลด: {$formattedPrice}</p>
                                                 <p class='property-card-text'>วันที่: {$a_day}</p>
                                                 <p class='property-card-text'>สถานะ: " . $statusOptions[$a_status] . "</p>
                                                 <p class='property-card-text'>ส่วนลด: {$discountHtml}</p>
+                                                 <p class='property-card-price'>ราคา: ฿{$row['e_price']}</p>
+                                                <p class='property-card-price'>ราคาส่วนลด: {$formattedPrice}</p>
                                                 <input type='hidden' name='e_id' value='{$row['e_id']}'>
                                                 <input type='hidden' name='a_id' value='{$row['a_id']}'>
                                                 <div class='form-group'>
