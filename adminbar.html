@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naka living</title>
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Include Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .sidebar {
+            background-color: #f8f9fa;
+            height: calc(100vh - 60px); /* ความสูงของหน้าจอ - ความสูงของหัวข้อ */
+            padding-top: 80px; /* เพื่อให้แน่ใจว่าเมนูไม่ทับกับหัวข้อ */
+        }
+        
+        body {
+            margin-top: 60px; /* ให้แน่ใจว่ามีช่องว่างเพียงพอระหว่างเนื้อหาและหัวข้อ */
+        }
+        .sidebar {
+            background-color: #f8f9fa;
+            height: 100vh;
+            padding-top: 20px;
+        }
+        .sidebar .nav-link {
+            color: #333;
+        }
+        .sidebar .nav-link.active {
+            background-color: #e9ecef;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #e2e6ea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <!-- User Management Menu -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#userMenu" aria-expanded="false" aria-controls="userMenu">
+                                <i class="fas fa-user"></i> จัดการข้อมูลพื้นฐาน
+                            </a>
+                            <div class="collapse" id="userMenu">
+                                <ul class="nav flex-column ml-3">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="edituser.php">
+                                            <i class="fas fa-user-cog"></i> ข้อมูลผู้ใช้
+                                        </a>
+                                    </li> 
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="type.php">
+                                            <i class="fas fa-tags"></i> ข้อมูลประเภท
+                                        </a>
+                                    </li>  
+                                </ul>
+                            </div>
+                        </li> 
+                        <!-- Main Menu Items -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="editestate.php">
+                                <i class="fas fa-home"></i> ข้อมูลอสังหาริมทรัพย์
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="editcompany.php">
+                                <i class="fas fa-building"></i> บริษัท
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="editpost.php">
+                                <i class="fas fa-bullhorn"></i> ประกาศขาย
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-tasks"></i> มอบหมายงาน
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-file-alt"></i> รายงาน
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Include jQuery and Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
